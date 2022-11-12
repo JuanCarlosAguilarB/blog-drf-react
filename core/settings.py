@@ -37,7 +37,6 @@ if RENDER_EXTERNAL_HOSTNAME:
 # Application definition
 
 DJANGO_APPS = [
-    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -47,8 +46,8 @@ DJANGO_APPS = [
 ]
 
 PROJECT_APPS = [
-    # 'apps.blog',
-    # 'apps.category'
+    'apps.blog',
+    'apps.category'
 ]
 
 THIRD_PARTY_APPS = [
@@ -60,8 +59,19 @@ THIRD_PARTY_APPS = [
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
 
+# configuracion ckeditor
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'autoParagraph': False
+    }
+}
+CKEDITOR_UPLOAD_PATH = "/media/"
+
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',

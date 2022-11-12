@@ -15,6 +15,7 @@ def blog_directory_path(instance, filename):
 class Post(models.Model):
 
     class PostObjects(models.Manager):
+        """clase que perminte traer todos los blogs publicados"""
         def get_queryset(self):
             return super().get_queryset().filter(status='published')
 

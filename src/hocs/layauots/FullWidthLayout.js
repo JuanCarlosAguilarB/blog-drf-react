@@ -1,11 +1,15 @@
+import Navbar from 'components/navbar/Navbar'
+import Footer from 'components/navigation/Footer'
 import React from 'react'
 import { connect } from 'react-redux'
 
 
-const FullWidthLayout = ({children}) => {
+const FullWidthLayout = ({ children }) => {
   return (
     <>
-    {children}
+      <Navbar />
+         {children}
+      <Footer />
     </>
   )
 }
@@ -15,6 +19,6 @@ const mapStateToProps = state => ({
 
 })
 
-export default connect(mapStateToProps,{
+export default connect(mapStateToProps, {
 
 })(FullWidthLayout)

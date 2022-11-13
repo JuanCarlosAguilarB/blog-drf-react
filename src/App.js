@@ -16,7 +16,7 @@ function App() {
       <Router>
         <Routes> 
           <Route path='*' element = {<Error404/>} />
-          <Route path='?' element = {<Home/>} />
+          <Route path='/' element = {<Home/>} />
         </Routes>
     <div className="App">
       <header className="App-header">

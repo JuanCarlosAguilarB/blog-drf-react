@@ -2,6 +2,8 @@ import React from 'react'
 import FullWidthLayout from 'hocs/layauots/FullWidthLayout'
 import { connect } from 'react-redux'
 
+
+
 const Home = () => {
   return (
     <FullWidthLayout>

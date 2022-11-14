@@ -154,7 +154,7 @@ export const get_blog = (slug) => async dispatch => {
         });
     }
 };
- 
+
 export const search_blog = (search_term) => async dispatch => {
 
     const config = {

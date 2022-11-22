@@ -4,10 +4,6 @@
 
 Se desea requiertare sistema backend para la implementación un blog estilo medium en el que se le  permita  publicar post a personas logueadas, comentar post y sequir a otros usuarios. 
 
-- Type some Markdown on the left
-- See HTML in the right
-- ✨Magic ✨
-
 #### Casos de uso
 A continuación se presentan los casos de uso evaluados.
 * Como usuario no autienficado me gustaría poder crear una cuenta.
@@ -23,9 +19,10 @@ A continuación se presentan los casos de uso evaluados.
 - En el login\sing up  se permite se ofrece la posibilidad de  realizar estos procesos rellenando un formulario o haciendo uso de la autentificación de google.
 
 ## Arquitectura
+- Para un primer diseño se realizará una arquitectura monolitica, para en etapas posteriores evaluar si es aconsejable escalar a una arquitectura de microservicios o realizar una escalamiento vertical. 
 
 ### Modelo de datos
-Poner diseño de entidades, Jsons, tablas, diagramas entidad relación, etc..
+![Modelo de la bases  de datos inicial](./Untitled.png)
 
 <!-- 
 Markdown is a lightweight markup language based on the formatting conventions

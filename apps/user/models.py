@@ -8,7 +8,6 @@ class Countries(models.Model):
     name = models.CharField(max_length=50, blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'countries'
 
 class UserAuth(models.Model):
@@ -16,7 +15,7 @@ class UserAuth(models.Model):
     first_name = models.CharField(max_length=50, blank=True, null=True)
     last_name = models.CharField(max_length=50, blank=True, null=True)
     phone = models.CharField(max_length=50, blank=True, null=True)
-    country = models.ForeignKey(Countries, models.DO_NOTHING, blank=True, null=True)
+    country = models.ForeignKey(Countries, models.DO_NOTHING)
     email = models.CharField(unique=True, max_length=50, blank=True, null=True)
     password = models.CharField(max_length=50, blank=True, null=True)
     username = models.CharField(unique=True, max_length=50, blank=True, null=True)

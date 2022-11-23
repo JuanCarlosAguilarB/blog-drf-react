@@ -6,11 +6,14 @@ class Category(models.Model):
         verbose_name = 'Category'
         verbose_name_plural = 'Categories'
     
-    parent = models.ForeignKey(
-        'self', related_name='children', on_delete=models.CASCADE, blank=True, null=True)
+    
+    id = models.UUIDField(primary_key=True)
+    # parent = models.ForeignKey(
+    #     'self', related_name='children', on_delete=models.CASCADE, blank=True, null=True)
     
     name = models.CharField(max_length=255, unique=True)
-    thumbnail =         models.ImageField(upload_to='media/categories/')
+    description = models.CharField(max_length=255, blank=True, null=True)
+    thumbnail =         models.ImageField(upload_to='media/categories/',null=True, blank=True)
 
     def __str__(self):
         return self.name

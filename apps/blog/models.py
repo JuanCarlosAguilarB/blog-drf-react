@@ -11,7 +11,7 @@ def blog_directory_path(instance, filename):
     """
     return 'blog/{0}/{1}'.format(instance.title, filename)
 
-
+## https://django-extensions.readthedocs.io/en/latest/field_extensions.html
 
 class Post(models.Model):
 

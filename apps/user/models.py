@@ -17,6 +17,10 @@ class CustomPasswortValidator:
     
     def validate(value):
         
+        # check minimun length of value
+        if len(value) < 8:
+            raise ValidationError(_('Password length must be greater than 8 character.'))
+        
         # check if value has a letter capitalized
         if not any(char.isupper() for char in value):  
             raise ValidationError(_('Password must contain at least one capital letter.'))

@@ -59,6 +59,14 @@ THIRD_PARTY_APPS = [
     'rest_framework',
     'ckeditor',
     'ckeditor_uploader',
+    
+    # social auth
+    'oauth2_provider',
+    'social_django',
+    'drf_social_oauth2',
+    
+    # swagger
+   'drf_yasg',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
@@ -97,6 +105,10 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                
+                # social auth
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -201,6 +213,13 @@ REST_FRAMEWORK = {
         # permitimos que cualquier persona dentro de nuestro dominio pueda llamar a la api
         'rest_framework.permissions.AllowAny'
     ],
+    
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+    # 'oauth2_provider.ext.rest_framework.OAuth2Authentication',  # django-oauth-toolkit < 1.0.0
+    'oauth2_provider.contrib.rest_framework.OAuth2Authentication',  # django-oauth-toolkit >= 1.0.0
+    'drf_social_oauth2.authentication.SocialAuthentication',
+    ),
+    
     # paginación
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 16,
@@ -208,6 +227,10 @@ REST_FRAMEWORK = {
 
 
 AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    
+    # social auth
+    'drf_social_oauth2.backends.DjangoOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )
 
@@ -257,7 +280,6 @@ if not DEBUG:
 AUTH_USER_MODEL = 'user.UserAuth'
 
 
-
-
+# https://github.com/wagnerdelima/drf-social-oauth2
 
 

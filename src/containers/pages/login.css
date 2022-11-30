@@ -1,0 +1,110 @@
+.login {
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+    height: 100vh;
+    align-items: center;
+    font-family: "Inter";
+  }
+  .main-container{
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .login__form {
+    display: flex;
+    flex-direction: column;
+  }
+  .login__form .submit__btn{
+    align-items: center;
+  }
+  
+  .login__form > h1 {
+    font-size: 35px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    letter-spacing: -1px;
+  }
+  
+  .input-login {
+    min-width: 380px;
+    padding: 20px 0;
+    padding-left: 15px;
+    margin-bottom: 10px;
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, 0.24);
+    font-family: "Inter";
+    border-radius: 25px;
+    font-size: 15px;
+  }
+  
+  .submit__btn {
+    /* width: 300px; */
+    padding: 5px 10px;
+    margin-top: 20px;
+    background: rgb(0, 0, 0);
+    border: 1px solid rgba(0, 0, 0, 0.24);
+    color: rgb(48, 45, 45);
+    font-size: 14px;
+    font-family: "Inter";
+    border-radius: 6px;
+  }
+  
+  .container-login-options{
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: space-between;
+    align-items: center;
+    font-family: "Inter";
+  }
+
+  .container-login-options-checkbox{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    /* font-family: "Inter"; */
+  }
+
+  .container-login-options-checkbox > input{
+    border-radius: 35%;
+    }
+
+    .container-login-options-checkbox > label:hover{
+        cursor: pointer;
+    }
+.container-login-options-checkbox > label:focus{
+    cursor: pointer;
+}
+
+  .container-login-options-Link:focus{
+    cursor: pointer;
+}
+
+
+  @media screen and (max-width: 768px) {
+
+    .login {
+        
+        flex-direction: column;
+      }
+      .login > div {
+        display: flex ;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .login > div > img{
+        width: 70%;
+      }
+
+    }
+
+
+
+
+    /* ////////////////////////// */
+
+    
+
+
+  

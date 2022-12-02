@@ -62,6 +62,8 @@ THIRD_PARTY_APPS = [
     
     # swagger
    'drf_yasg',
+   
+   'rest_framework_simplejwt'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
@@ -203,7 +205,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         # permitimos que cualquier persona dentro de nuestro dominio pueda llamar a la api
-        'rest_framework.permissions.AllowAny'
+        # 'rest_framework.permissions.AllowAny'
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
     
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -268,4 +271,9 @@ AUTH_USER_MODEL = 'user.UserAuth'
 
 # https://github.com/wagnerdelima/drf-social-oauth2
 
-
+# jwt settings
+from datetime import timedelta
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+}

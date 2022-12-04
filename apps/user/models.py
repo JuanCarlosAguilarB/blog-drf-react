@@ -103,6 +103,11 @@ AbstractBaseUser: Use this option if you want to start from scratch by creating 
 
 """
 
+def user_profile_path(instance, filename):
+    """función asignar la ubicación de las imagenes en la carpeta correspondiente
+    """
+    return 'user_profile_photo/{0}/{1}'.format(instance.title, filename)
+
 class UserAuth(AbstractBaseUser, PermissionsMixin):
     """
     Model by create and save a user with given email and password.
@@ -116,8 +121,9 @@ class UserAuth(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email address'), unique=True)
     password = models.CharField(max_length=128)
     username = models.CharField(unique=True, max_length=50, blank=True, null=True)
-    photo = models.CharField(max_length=50, blank=True, null=True)
-    created_at = models.DateTimeField(blank=True, null=True)
+    photo = models.ImageField(max_length=50, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     
     # fields that to need django auth models
     is_staff = models.BooleanField(default=False)
@@ -131,3 +137,8 @@ class UserAuth(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+    
+    def get_user_profile_photo(self):
+        if self.photo:
+            return self.photo.url
+        return ''

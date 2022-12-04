@@ -14,6 +14,9 @@ from rest_framework import status
 from apps.user.models import UserAuth
 
 
+from django.contrib.auth.hashers import make_password
+
+
 class UserTestCase(TestCase):
     
     def setUp(self):
@@ -37,26 +40,30 @@ class UserTestCase(TestCase):
 
         client = APIClient()
         response = client.post(
-                '/api/v1/users/users/', {
+                '/api/v1/users/signup/', {
                 'email': 'testing@cosasdedevs.com',
                 'password': 'rc{4@qHjR>!b`yAV',
-                'password_confirmation': 'rc{4@qHjR>!b`yAV',
+                'password2': 'rc{4@qHjR>!b`yAV',
                 'first_name': 'Testing',
                 'last_name': 'Testing',
                 'phone': '999888777',
-                'city': 'Madrid',
-                'country': 'España',
-                # 'photo': tmp_file,
-                'extract': 'I am a testing',
+                # 'city': 'Madrid',
+                # 'country': 'España',
+                'photo': tmp_file,
                 'username': 'testing1'
             },
-            # format='multipart'
-            format='json'
-            
+            format='multipart'
         )
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(json.loads(response.content), {"username":"testing1","first_name":"Testing","last_name":"Testing","email":"testing@cosasdedevs.com"})
+        
+        user_info = json.loads(response.content) 
+        self.assertEqual(user_info['email'], "testing@cosasdedevs.com")
+        # self.assertEqual(user_info['password'], make_password('rc{4@qHjR>!b`yAV'))
+        self.assertEqual(user_info['first_name'], "Testing")
+        self.assertEqual(user_info['last_name'], "Testing")
+        self.assertEqual(user_info['phone'], "999888777")
+        self.assertEqual(user_info['username'], "testing1")
 
     
     def test_login_UserAuth(self):

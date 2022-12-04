@@ -14,6 +14,7 @@ class ListUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserAuth
         exclude = ('password', 'user_permissions', 'is_superuser', 'last_login', 'is_staff', 'is_active', 'groups')
+ 
         
 class CreateUserSerializer(serializers.ModelSerializer):
     """ 
@@ -45,3 +46,48 @@ class CreateUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserAuth
         exclude = ('user_permissions', 'is_superuser', 'last_login', 'is_staff', 'is_active', 'groups')
+        
+        
+class ChangePasswordSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, required=True)
+    password2 = serializers.CharField(write_only=True, required=True)
+
+    class Meta:
+        model = UserAuth
+        fields = ('password', 'password2')
+
+    def validate(self, attrs):
+        if attrs['password'] != attrs['password2']:
+            raise serializers.ValidationError({"password": "Password fields didn't match."})
+
+        return attrs
+
+    def validate_old_password(self, value):
+        user = self.context['request'].user
+        if not user.check_password(value):
+            raise serializers.ValidationError({"old_password": "Old password is not correct"})
+        return value
+
+    def update(self, instance, validated_data):
+
+        instance.set_password(validated_data['password'])
+        instance.save()
+
+        return instance
+    
+
+class DeleteAccount(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, required=True)
+
+    class Meta:
+        model = UserAuth
+        fields = ('password',)
+
+    def validate_password(self, value):
+        user = self.context['request'].user
+        if not user.check_password(value):
+            raise serializers.ValidationError({"old_password": "Old password is not correct"})
+        return value
+
+
+    

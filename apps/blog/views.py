@@ -17,7 +17,7 @@ class BlogListView(APIView):
     """Vista para mostrar todos los blogs publicados"""
     
     def get(self, request, format=None):
-        """guncion para traer todos lode blogs publicados"""
+        """funcion para traer todos lode blogs publicados"""
         
         # usamos postobjects en vez de objects porque creamos este método para traer todos los post publicados. Esto para no hacer un filter cada vez que los llamamos 
         if Post.postobjects.all().exists():

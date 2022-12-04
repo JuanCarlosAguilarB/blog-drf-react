@@ -1,11 +1,16 @@
-from rest_framework.generics import CreateAPIView
-from rest_framework.permissions import IsAdminUser
-
+# Django
 from django.shortcuts import get_object_or_404
+from django.http import Http404
+
+#Django Rest Framework
+from rest_framework.generics import CreateAPIView, UpdateAPIView, RetrieveAPIView
+from rest_framework.permissions import IsAdminUser
 from rest_framework import status,viewsets
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
-from apps.user.serializers import CreateUserSerializer, ListUserSerializer
+# apps
+from apps.user.serializers import CreateUserSerializer, ListUserSerializer, ChangePasswordSerializer, DeleteAccount
 from apps.user.models import UserAuth
 
 
@@ -32,7 +37,56 @@ class CreateUser(CreateAPIView):
         return Response(user_info, status=status.HTTP_201_CREATED)
 
 
+class ChangePasswordView(UpdateAPIView):
+    """Change password of an user"""
+    
+    ## para buscar por username, see the next
+    # https://github.com/encode/django-rest-framework/issues/6005
+    lookup_field = 'username'
+    permission_classes = (IsAuthenticated,)
+    
+    def get_queryset(self):
 
+        # extraer el username del url
+        username = self.kwargs['username']
+        user = UserAuth.objects.filter(username=username)
+        if not user:
+            raise Http404("No MyModel matches the given query.")
+       
+        return user
+    serializer_class = ChangePasswordSerializer
+    
+    
+class DeleteUserAcount(RetrieveAPIView):
+    """Delete account of one user"""
+    
+    ## para buscar por username, see the next
+    # https://github.com/encode/django-rest-framework/issues/6005
+    lookup_field = 'username'
+    # permission_classes = (IsAuthenticated,)
+    
+    def get_queryset(self):
+
+        # extraer el username del url
+        username = self.kwargs['username']
+        print( self.kwargs,"..........................")
+        user = UserAuth.objects.filter(username=username)
+        if not user:
+            raise Http404("No MyModel matches the given query.")
+       
+        return user
+    
+    serializer_class = DeleteAccount
+    
+    def retrieve(self, request, username, pk=None):
+        instance = self.get_object()
+        # query = request.GET.get('query', None)  # read extra data
+        instance.status = False
+        instance.save()
+        return Response(self.serializer_class(instance).data,
+                        status=status.HTTP_200_OK)
+    
+  
 class UserViewSet(viewsets.ViewSet):
     """
     Crud of users. 
@@ -49,16 +103,3 @@ class UserViewSet(viewsets.ViewSet):
         serializer = ListUserSerializer(queryset, many=True)
         return Response(serializer.data)
 
-    # let's go to comment this create method because an user, in specifyc, that is not authenticated should see all data of all users 
-    # def create(self, request, *args, **kwargs):
-    #     """
-    #     Create one user.
-    #     """
-        
-    #     # in the serializers, we lets go to validate passwor2, for it we lets go to pass the context at serializxers
-    #     serializer = CreateUserSerializer(data=request.data, context=request.data)
-    #     serializer.is_valid(raise_exception=True)
-    #     serializer.save()
-
-    #     return Response(serializer.data, status=status.HTTP_201_CREATED)
-    

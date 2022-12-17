@@ -12,7 +12,7 @@ from rest_framework.permissions import IsAuthenticated
 # apps
 from apps.user.serializers import CreateUserSerializer, ListUserSerializer, ChangePasswordSerializer, DeleteAccount
 from apps.user.models import UserAuth
-from apps.pagination import MediumSetPagination
+from apps.commons import ListModelMixin
 
 
 
@@ -87,25 +87,6 @@ class DeleteUserAcount(RetrieveAPIView):
         return Response(self.serializer_class(instance).data,
                         status=status.HTTP_200_OK)
     
-from rest_framework.pagination import PageNumberPagination
-
-
-class ListModelMixin:
-    """
-    List a queryset.
-    """
-    def list(self, request, *args, **kwargs):
-        queryset = self.get_queryset() 
-        
-        page = self.paginate_queryset(queryset)
-        if page is not None:
-            serializer = self.get_serializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
-
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
-
-
 
 class UserViewSet(ListModelMixin, viewsets.GenericViewSet, viewsets.ViewSet):
     """

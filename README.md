@@ -194,6 +194,9 @@ MIT
    [PlMe]: <https://github.com/joemccann/dillinger/tree/master/plugins/medium/README.md>
    [PlGa]: <https://github.com/RahulHP/dillinger/blob/master/plugins/googleanalytics/README.md> -->
 
+# Subscriptions Plans
+Subscription plan structure
+![Structure of subscription plans](./subscriptions.PNG)
 
 
 # Getting Started with Create React App and Redux

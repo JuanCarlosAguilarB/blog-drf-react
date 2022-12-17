@@ -52,6 +52,7 @@ PROJECT_APPS = [
     'apps.tags',
     'apps.comments',
     'apps.user',
+    'apps.subscriptions',
 ]
 
 THIRD_PARTY_APPS = [

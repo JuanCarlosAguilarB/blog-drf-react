@@ -1,8 +1,14 @@
+# Python
+import json
+
+# Django
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.hashers import make_password
 
+# Django rest
 from rest_framework import serializers
 
+# Apps
 from apps.user.models import UserAuth
 
 
@@ -42,7 +48,7 @@ class CreateUserSerializer(serializers.ModelSerializer):
         #is needly to encripted  the password
         validated_data['password'] = make_password(validated_data['password'])
         return UserAuth.objects.create(**validated_data)
-        
+    
     class Meta:
         model = UserAuth
         exclude = ('user_permissions', 'is_superuser', 'last_login', 'is_staff', 'is_active', 'groups')

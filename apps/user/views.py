@@ -12,6 +12,7 @@ from rest_framework.permissions import IsAuthenticated
 # apps
 from apps.user.serializers import CreateUserSerializer, ListUserSerializer, ChangePasswordSerializer, DeleteAccount
 from apps.user.models import UserAuth
+from apps.pagination import MediumSetPagination
 
 
 
@@ -86,20 +87,37 @@ class DeleteUserAcount(RetrieveAPIView):
         return Response(self.serializer_class(instance).data,
                         status=status.HTTP_200_OK)
     
-  
-class UserViewSet(viewsets.ViewSet):
+from rest_framework.pagination import PageNumberPagination
+
+
+class ListModelMixin:
     """
-    Crud of users. 
+    List a queryset.
+    """
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset() 
+        
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+
+
+class UserViewSet(ListModelMixin, viewsets.GenericViewSet, viewsets.ViewSet):
+    """
+    List of users with active acounts . 
     """
     queryset = UserAuth.objects.all()
     serializer_class = CreateUserSerializer
-    # permission_classes = [IsAdminUser]
     
-    def list(self, request):
-        """
-        List all users
-        """
-        queryset = UserAuth.objects.all()
-        serializer = ListUserSerializer(queryset, many=True)
-        return Response(serializer.data)
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        # los usuarios con status son los usuarios con cuentas activas       
+        return  queryset.filter(status=True)
+    
+    # permission_classes = [IsAdminUser]
 

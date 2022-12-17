@@ -203,6 +203,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # configuración de django rest framework
 REST_FRAMEWORK = {
+    
+    # paginación
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 10,
+    
     'DEFAULT_PERMISSION_CLASSES': [
         # permitimos que cualquier persona dentro de nuestro dominio pueda llamar a la api
         # 'rest_framework.permissions.AllowAny'
@@ -212,10 +217,9 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     
-    # paginación
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 16,
+
 }
+
 
 
 AUTHENTICATION_BACKENDS = (

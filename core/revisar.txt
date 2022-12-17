@@ -1,0 +1,27 @@
+https://www.youtube.com/watch?v=lo7lBD9ynVc&ab_channel=GeekyShows
+
+logout
+https://medium.com/django-rest/logout-django-rest-framework-eb1b53ac6d35
+
+leer acerca de los jwt
+https://coffeebytes.dev/no-uses-jwt-para-gestionar-sesiones-traduccion/
+https://coffeebytes.dev/django-rest-framework-y-jwt-para-autenticar-usuarios/
+
+
+https://plainenglish.io/blog/django-rest-framework-jwt-auth-with-login-and-register-77f830cd8789
+
+sing up using jwt 
+https://www.youtube.com/watch?v=GzTfE4WhKhg&ab_channel=FaithOlusegun
+
+???????????????????
+
+falta  
+first test
+    test change password
+    test delete account
+    list all users whit status is true
+    test list users
+    users details
+    test users details 
+
+    ver como asignar el mismo endpoint a diferentes viewsets

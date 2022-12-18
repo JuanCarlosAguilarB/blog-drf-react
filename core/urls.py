@@ -36,6 +36,7 @@ urlpatterns = [
    path('api/v1/blog/', include('apps.blog.urls')),
    path('api/v1/category/', include('apps.category.urls')),
    path('api/v1/users/', include('apps.user.urls')),
+   path('api/v1/subscriptions/', include('apps.subscriptions.urls')),
    
    path('admin/', admin.site.urls),
       

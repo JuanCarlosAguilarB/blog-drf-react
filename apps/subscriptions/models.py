@@ -11,6 +11,9 @@ class Subscriptions(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField()
     
+    def __str__(self) -> str:
+        return self.name
+    
 class TypesOfSubscriptions(models.Model):
     """Model for to represent the types of the subscriptions"""
     
@@ -18,11 +21,14 @@ class TypesOfSubscriptions(models.Model):
 
     class Meta:
         db_table = "types_subscriptions"
+    
+    def __str__(self) -> str:
+        return self.name
   
 class PlanSSubscriptions(models.Model):
     """Model for to represent the plans of subscriptions."""
     
-    subscription = models.ForeignKey(User, verbose_name="subscription", on_delete=models.PROTECT)
+    subscription = models.ForeignKey(Subscriptions, verbose_name="subscription", on_delete=models.PROTECT)
     type = models.ForeignKey(TypesOfSubscriptions,  on_delete=models.PROTECT)
     price = models.FloatField()
     
@@ -34,6 +40,7 @@ class SubscriptionsForUsers(models.Model):
     
     user = models.ForeignKey(User, verbose_name="user", on_delete=models.PROTECT)
     plan = models.ForeignKey(PlanSSubscriptions,  on_delete=models.PROTECT)
+    status = models.BooleanField(default=True)
    
     # en caso de haber un descuento especial, por temporada o demás.
     discount_applied = models.FloatField(default=0.0, blank=True, null=True)

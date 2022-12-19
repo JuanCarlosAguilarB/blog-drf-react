@@ -199,7 +199,14 @@ Subscription plan structure
 ![Structure of subscription plans](./subscriptions.PNG)
 
 
-# Getting Started with Create React App and Redux
+# Getting Started 
+
+### Docker 
+Para ejecutar el proyecto con docker es necesario crear la imagen
+   `docker build -t image_name .`
+
+Correr el contenedor
+`docker run --rm -p 8000:8000 -v ${pwd}:/app -d --name container_name image_name`
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
 

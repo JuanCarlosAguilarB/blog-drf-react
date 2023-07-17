@@ -1,0 +1,6 @@
+# PostgreSQL
+POSTGRES_DB='blog_drf'
+POSTGRES_USER='postgres'
+POSTGRES_PASSWORD='clave123'
+POSTGRES_PORT=5432
+POSTGRES_HOST='postgres'

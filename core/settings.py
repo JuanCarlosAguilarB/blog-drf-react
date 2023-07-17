@@ -1,3 +1,4 @@
+from datetime import timedelta
 from pathlib import Path
 import os
 import environ
@@ -7,8 +8,7 @@ env = environ.Env()
 environ.Env.read_env()
 
 
-
-## nos aseguramos de la lectura de variables de entorno
+# nos aseguramos de la lectura de variables de entorno
 ENVIRONMENT = env
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -60,11 +60,11 @@ THIRD_PARTY_APPS = [
     'rest_framework',
     'ckeditor',
     'ckeditor_uploader',
-    
+
     # swagger
-   'drf_yasg',
-   
-   'rest_framework_simplejwt'
+    'drf_yasg',
+
+    'rest_framework_simplejwt'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
@@ -124,17 +124,17 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 
 DATABASES = {
-   'default': {
-       'ENGINE': 'django.db.backends.postgresql',
-       'NAME': os.environ.get('DATABASE_NAME'),
-       'USER': os.environ.get('DATABASE_USER'),
-       'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
-       'HOST': os.environ.get('DATABASE_HOST'),
-       'PORT': os.environ.get('DATABASE_PORT'),
-   }
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('POSTGRES_DB'),
+        'USER': os.environ.get('POSTGRES_USER'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+        'HOST': os.environ.get('POSTGRES_HOST'),
+        'PORT': os.environ.get('POSTGRES_PORT'),
+    }
 }
 
-# para que la base de datos sea atómica. Permita request instantáneos 
+# para que la base de datos sea atómica. Permita request instantáneos
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
 # habilitamos las cors para permitir acceso al front a la api
@@ -148,7 +148,7 @@ CSRF_TRUSTED_ORIGINS = [
     'http://localhost:8000',
 ]
 
-# protección extra a la base de datos 
+# protección extra a la base de datos
 PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.Argon2PasswordHasher",
     "django.contrib.auth.hashers.PBKDF2PasswordHasher",
@@ -204,23 +204,22 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # configuración de django rest framework
 REST_FRAMEWORK = {
-    
+
     # paginación
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 10,
-    
+
     'DEFAULT_PERMISSION_CLASSES': [
         # permitimos que cualquier persona dentro de nuestro dominio pueda llamar a la api
         # 'rest_framework.permissions.AllowAny'
     ],
-    
+
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
-    
+
 
 }
-
 
 
 AUTHENTICATION_BACKENDS = (
@@ -230,20 +229,19 @@ AUTHENTICATION_BACKENDS = (
 
 FILE_UPLOAD_PERMISSIONS = 0o640
 
-EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
-# configuración para aws  
+# configuración para aws
 if not DEBUG:
-    DEFAULT_FROM_EMAIL="Uridium <mail@uridium.network>"
-    EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+    DEFAULT_FROM_EMAIL = "Uridium <mail@uridium.network>"
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
     EMAIL_HOST = env('EMAIL_HOST')
     EMAIL_HOST_USER = env('EMAIL_HOST_USER')
     EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
     EMAIL_PORT = env('EMAIL_PORT')
     EMAIL_USE_TLS = env('EMAIL_USE_TLS')
 
-    
     # django-ckeditor will not work with S3 through django-storages without this line in settings.py
     AWS_QUERYSTRING_AUTH = False
 
@@ -251,7 +249,6 @@ if not DEBUG:
     AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
     AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
-
 
     AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
     AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
@@ -268,15 +265,14 @@ if not DEBUG:
     PUBLIC_MEDIA_LOCATION = 'media'
     MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{PUBLIC_MEDIA_LOCATION}/'
     DEFAULT_FILE_STORAGE = 'core.storage_backends.MediaStore'
-    
-    
+
+
 AUTH_USER_MODEL = 'user.UserAuth'
 
 
 # https://github.com/wagnerdelima/drf-social-oauth2
 
 # jwt settings
-from datetime import timedelta
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
